@@ -44,17 +44,8 @@ resource "aws_instance" "web" {
 
 
 # This is to ensure SSH comes up before we run the local exec.
- 
-  
-  provisioner "remote-exec" { 
-    inline = ["echo 'Hello World'"]
-
-    connection {
-      type = "ssh"
-      host = "${aws_instance.web.public_ip}"
-      user = "${var.ssh_user}"
-      private_key = "${var.ssh_key}"
-    }
+  provisioner "local-exec" {
+    command = "ssh -i ~/.ssh/id_rsa '${aws_instance.web.public_ip},'"
   }
 
   provisioner "local-exec" {
