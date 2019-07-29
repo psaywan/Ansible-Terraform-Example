@@ -41,6 +41,12 @@ resource "aws_instance" "web" {
   source_dest_check      = false
   instance_type          = "${var.instance_type}"
 
+  
+  output "instance_ips" {
+  value = ["${aws_instance.web.*.public_ip}"]
+}
+  
+  
 # This is to ensure SSH comes up before we run the local exec.
 
 
