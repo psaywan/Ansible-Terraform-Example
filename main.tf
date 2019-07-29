@@ -49,6 +49,7 @@ resource "aws_instance" "web" {
 
     connection {
       type = "ssh"
+      host = "${aws_instance.web.*.public_ip}"
       user = "${var.ssh_user}"
       private_key = "${var.ssh_key}"
     }
