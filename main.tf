@@ -58,3 +58,4 @@ resource "aws_instance" "web" {
   provisioner "local-exec" {
     command = "ansible-playbook -i '${aws_instance.web.*.public_dns},' --private-key ${var.ssh_key} ../home/pranay/Terraform-Jenkins-flow-repo/apache.yml"
   }
+  }
