@@ -45,10 +45,6 @@ resource "aws_instance" "web" {
 
 # This is to ensure SSH comes up before we run the local exec.
  
-resource "null_resource" "web_provisioner" {
-  triggers {
-    public_ip = "${aws_instance.web.public_ip}"
-  }
   
   provisioner "remote-exec" { 
     inline = ["echo 'Hello World'"]
