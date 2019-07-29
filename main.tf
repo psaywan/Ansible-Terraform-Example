@@ -41,7 +41,7 @@ resource "aws_instance" "web" {
   source_dest_check      = false
   instance_type          = "${var.instance_type}"
   
-}
+
 
 # This is to ensure SSH comes up before we run the local exec.
  
@@ -60,4 +60,4 @@ resource "aws_instance" "web" {
   provisioner "local-exec" {
     command = "ansible-playbook -i '${aws_instance.web.public_ip},' --private-key ${var.ssh_key} ../home/pranay/Terraform-Jenkins-flow-repo/apache.yml"
   }
-  }
+}
