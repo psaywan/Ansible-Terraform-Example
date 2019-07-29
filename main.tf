@@ -40,11 +40,6 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
   source_dest_check      = false
   instance_type          = "${var.instance_type}"
-
-  
-  output "instance_ips" {
-  value = ["${aws_instance.web.*.public_ip}"]
-}
   
   
 # This is to ensure SSH comes up before we run the local exec.
@@ -55,13 +50,13 @@ resource "aws_instance" "web" {
 
     connection {
       type = "ssh"
-      host = "${aws_instance.web.*.public_ip}"
+      host = "${aws_instance.web.public_ip}"
       user = "${var.ssh_user}"
       private_key = "${var.ssh_key}"
     }
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i '${aws_instance.web.*.public_ip},' --private-key ${var.ssh_key} ../home/pranay/Terraform-Jenkins-flow-repo/apache.yml"
+    command = "ansible-playbook -i '${aws_instance.web.public_ip},' --private-key ${var.ssh_key} ../home/pranay/Terraform-Jenkins-flow-repo/apache.yml"
   }
   }
